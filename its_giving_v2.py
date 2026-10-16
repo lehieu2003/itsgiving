@@ -582,9 +582,16 @@ def draw_hud(img, shown, raw, d, face, hands, body, base):
         cv2.putText(img, t, (10, y), cv2.FONT_HERSHEY_SIMPLEX, 0.55, colour, 1)
 
 
+def parse_camera(val):
+    try:
+        return int(val)
+    except ValueError:
+        return val
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--camera", type=int, default=0, help="webcam index (try 1 if 0 is your iPhone)")
+    ap.add_argument("--camera", type=parse_camera, default=0, help="webcam index or stream URL (e.g. http://192.168.1.5:8080/video)")
     ap.add_argument("--calibrate", action="store_true", help="learn your neutral face, save it, and exit")
     ap.add_argument("--no-calibration", action="store_true", help="ignore calibration.json; use the generic baseline")
     ap.add_argument("--no-vcam", action="store_true", help="preview only; don't start the virtual camera")
